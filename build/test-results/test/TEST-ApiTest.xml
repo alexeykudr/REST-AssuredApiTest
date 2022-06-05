@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ApiTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-06-05T11:27:55" hostname="MacBook-Pro-Mac" time="3.053">
+  <properties/>
+  <testcase name="tmp()" classname="ApiTest" time="3.053"/>
+  <system-out><![CDATA[HTTP/1.1 200 OK
+Date: Sun, 05 Jun 2022 11:27:58 GMT
+Content-Type: application/json; charset=utf-8
+Transfer-Encoding: chunked
+Connection: keep-alive
+X-Frame-Options: SAMEORIGIN
+X-Xss-Protection: 1; mode=block
+X-Content-Type-Options: nosniff
+X-Download-Options: noopen
+X-Permitted-Cross-Domain-Policies: none
+Referrer-Policy: strict-origin-when-cross-origin
+Etag: W/"7b387b80c655d97cfd5cc14d06f37be6"
+Cache-Control: max-age=0, private, must-revalidate
+X-Request-Id: 083c7994-f40e-4421-98b0-93cf92efba57
+Ratelimit-Limit: 1000
+Ratelimit-Remaining: 995
+X-Runtime: 1.034408
+Vary: Origin
+Via: 1.1 vegur
+CF-Cache-Status: DYNAMIC
+Expect-CT: max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+Report-To: {"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=i%2FqQkx2O9d9p85KpjXaAKw%2FsdZyz6nEOiw2nmgrI1LewQaVUeFGmP%2Ff4o8mMaMhpMXGRzTE9uzXtaJGiLsLDQabzvctQZWGK%2FRUxZxRDcGEjojrVkGXWro1RyYyPrgAQwZPZry0pVufmJqE%3D"}],"group":"cf-nel","max_age":604800}
+NEL: {"success_fraction":0,"report_to":"cf-nel","max_age":604800}
+Server: cloudflare
+CF-RAY: 71688fdf7b67417a-HAM
+Content-Encoding: gzip
+alt-svc: h3=":443"; ma=86400, h3-29=":443"; ma=86400
+
+{
+    "types": [
+        "Artifact",
+        "Conspiracy",
+        "Creature",
+        "Dragon",
+        "Elemental",
+        "Enchantment",
+        "Goblin",
+        "Hero",
+        "instant",
+        "Instant",
+        "Jaguar",
+        "Knights",
+        "Land",
+        "Phenomenon",
+        "Plane",
+        "Planeswalker",
+        "Scheme",
+        "Sorcery",
+        "Summon",
+        "Tribal",
+        "Vanguard",
+        "Wolf",
+        "You’ll"
+    ]
+}
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
