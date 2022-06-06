@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ApiTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-06-06T12:35:36" hostname="MacBook-Pro-Mac" time="2.425">
+<testsuite name="ApiTest" tests="13" skipped="0" failures="0" errors="0" timestamp="2022-06-06T15:58:25" hostname="MacBook-Pro-Mac" time="22.587">
   <properties/>
-  <testcase name="getInvalidCardsById()" classname="ApiTest" time="2.425"/>
+  <testcase name="findByForeignName()" classname="ApiTest" time="8.816"/>
+  <testcase name="getCardsMockId()" classname="ApiTest" time="4.024"/>
+  <testcase name="getSets()" classname="ApiTest" time="1.04"/>
+  <testcase name="getSubTypes()" classname="ApiTest" time="1.369"/>
+  <testcase name="getSupertypesTypes()" classname="ApiTest" time="1.29"/>
+  <testcase name="getFormats()" classname="ApiTest" time="1.841"/>
+  <testcase name="getSetMockId()" classname="ApiTest" time="0.37"/>
+  <testcase name="getSetBoosterId()" classname="ApiTest" time="0.617"/>
+  <testcase name="getInvalidCardsById()" classname="ApiTest" time="0.338"/>
+  <testcase name="getCards()" classname="ApiTest" time="0.798"/>
+  <testcase name="getTypes()" classname="ApiTest" time="1.385"/>
+  <testcase name="searchByInvalidForeignName()" classname="ApiTest" time="0.376"/>
+  <testcase name="getInvalidCards()" classname="ApiTest" time="0.318"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

@@ -115,6 +115,13 @@ public class ApiTest {
 
         assertEquals(list.size(), 14);
     }
+
+    @Test
+    public void getSetBoosterId(){
+        Response response = get(baseUrl + "sets/" + "10E/" + "booster");
+        responseBasicValidation(response);
+    }
+
     @Test
     public void getTypes() {
         //        pass if /types returns data and count of types is 23
@@ -178,6 +185,7 @@ public class ApiTest {
         JsonPath jsonPathEvaluator = res.jsonPath();
         assertEquals(jsonPathEvaluator.get("cards[0].name"), "Avacyn, Angel of Hope");
         assertEquals(jsonPathEvaluator.get("cards[0].id"), "2ed7c882-83c3-5867-87bc-5a6c8e69db56");
+        
         testCardId(jsonPathEvaluator.get("cards[0].id"));
     }
 
@@ -193,16 +201,4 @@ public class ApiTest {
         assertEquals(jsonPathEvaluator.get("cards"), new ArrayList<>());
     }
 
-    @Test
-    public void tmp(){
-        RestAssured.baseURI = baseUrl;
-        RestAssured
-                .given()
-                .pathParam("resourcePath", "types")
-                .when()
-                .get("{resourcePath}")
-                .then()
-                .log()
-                .all();
-    }
 }
