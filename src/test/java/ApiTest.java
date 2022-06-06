@@ -19,6 +19,7 @@ public class ApiTest {
 
 
     public void responseBasicValidation(Response response) {
+//        basic request validation, want to get 200 status code, json type and other base headers
         response.then().statusCode(200);
         Headers allHeaders = response.getHeaders();
         String contentType = allHeaders.getValue("Content-Type");
@@ -28,14 +29,14 @@ public class ApiTest {
     }
 
     public void testCardId(String id) {
-//        method to get card by id, not mocked, require id , request looks like /card/1123-czxjnc-h213
+        //        method to get card by id, not mocked, require id , request looks like /card/1123-czxjnc-h213
         Response response = get(baseUrl + "cards/" + id);
         responseBasicValidation(response);
         response.then().body("card.id", equalTo(id));
     }
 
     public void testSetId(String id) {
-//        pass if mocked set-code exist and data  on set booster is correct
+        //        pass if mocked set-code exist and data  on set booster is correct
         Response response = get(baseUrl + "sets/" + id);
         responseBasicValidation(response);
 
@@ -47,14 +48,21 @@ public class ApiTest {
 
     @Test
     public void getCards() {
-//        pass if get request on /cards works correctly
+        //        pass if get request on /cards works correctly
         Response response = get(baseUrl + "cards");
         responseBasicValidation(response);
     }
 
     @Test
+    public void getInvalidCards() {
+        //        pass if get request on /cards works correctly
+        Response response = get(baseUrl + "CARDS");
+        response.then().statusCode(404);
+    }
+
+    @Test
     public void getCardsMockId() {
-//        pass if first card exist in cards
+        //        pass if first card exist in cards
         Response response = get(baseUrl + "cards/1");
         responseBasicValidation(response);
         response.then().body("card.cmc",
@@ -69,11 +77,19 @@ public class ApiTest {
         Response responseById = get(baseUrl + "cards/" + id);
         responseBasicValidation(responseById);
     }
+    @Test
+    public void getInvalidCardsById() {
+        //        pass if get request on /cards works correctly
+        Response response = get(baseUrl + "cards/1231231");
+        response.then().statusCode(404);
+        JsonPath jsonPathEvaluator = response.jsonPath();
+        assertEquals(jsonPathEvaluator.get("error"), "Not Found");
+    }
 
 
     @Test
     public void getSets() {
-//        pass if sets return all sets(actual 500 codes of sets)
+        //        pass if sets return all sets(actual 500 codes of sets)
         Response response = get(baseUrl + "sets/");
         responseBasicValidation(response);
 
@@ -88,7 +104,7 @@ public class ApiTest {
 
     @Test
     public void getSetMockId() {
-//        pass if mocked set-code exist and data  on set booster is correct
+        //        pass if mocked set-code exist and data  on set booster is correct
         Response response = get(baseUrl + "sets/" + "10E");
         responseBasicValidation(response);
 
@@ -101,7 +117,7 @@ public class ApiTest {
     }
     @Test
     public void getTypes() {
-//        pass if /types returns data
+        //        pass if /types returns data and count of types is 23
         Response response = get(baseUrl + "types");
         responseBasicValidation(response);
 
@@ -111,6 +127,7 @@ public class ApiTest {
 
     @Test
     public void getSubTypes() {
+        //        pass if /subtypes returns data and count of types is 445
         Response response = get(baseUrl + "subtypes");
         responseBasicValidation(response);
         JsonPath jsonPathEvaluator = response.jsonPath();
@@ -119,6 +136,7 @@ public class ApiTest {
 
     @Test
     public void getSupertypesTypes() {
+        //        pass if /supertypes returns data which is like mocked data
         Response response = get(baseUrl + "supertypes");
         responseBasicValidation(response);
 
@@ -139,6 +157,7 @@ public class ApiTest {
 
     @Test
     public void getFormats() {
+        //pass if /subtypes returns data and count of types is 445
         Response response = get(baseUrl + "formats");
 
         responseBasicValidation(response);
@@ -149,6 +168,7 @@ public class ApiTest {
 
     @Test
     public void findByForeignName() {
+        //pass if mocked name are exist and check returned id with /cards/id
         RestAssured.baseURI = baseUrl;
         RequestSpecification httpRequest = RestAssured.given();
 
