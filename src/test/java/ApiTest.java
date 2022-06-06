@@ -2,22 +2,20 @@ import io.restassured.RestAssured;
 import io.restassured.http.Headers;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import io.restassured.response.ResponseBody;
 import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Assertions;
-
 import java.util.ArrayList;
-
 import static io.restassured.RestAssured.get;
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
 
 public class ApiTest {
     //    fixtures
     String baseUrl = "https://api.magicthegathering.io/v1/";
     String expectedContentType = "application/json; charset=utf-8";
+    ArrayList codeList = new ArrayList();
 
 
     public void responseBasicValidation(Response response) {
@@ -29,17 +27,34 @@ public class ApiTest {
         assertEquals(transferEncoding, "chunked");
     }
 
-
-    @Test
-    public void getCards() {
-//        pass all tests if get request on /cards works correctly
-        Response response = get(baseUrl + "cards");
+    public void testCardId(String id) {
+//        method to get card by id, not mocked, require id , request looks like /card/1123-czxjnc-h213
+        Response response = get(baseUrl + "cards/" + id);
         responseBasicValidation(response);
+        response.then().body("card.id", equalTo(id));
+    }
+
+    public void testSetId(String id) {
+//        pass if mocked set-code exist and data  on set booster is correct
+        Response response = get(baseUrl + "sets/" + id);
+        responseBasicValidation(response);
+
+        JsonPath jsonPathEvaluator = response.jsonPath();
+        String a = jsonPathEvaluator.get("set.code");
+        assertNotEquals(codeList.indexOf(a), -1);
     }
 
 
     @Test
-    public void getCardsId() {
+    public void getCards() {
+//        pass if get request on /cards works correctly
+        Response response = get(baseUrl + "cards");
+        responseBasicValidation(response);
+    }
+
+    @Test
+    public void getCardsMockId() {
+//        pass if first card exist in cards
         Response response = get(baseUrl + "cards/1");
         responseBasicValidation(response);
         response.then().body("card.cmc",
@@ -55,24 +70,25 @@ public class ApiTest {
         responseBasicValidation(responseById);
     }
 
+
     @Test
     public void getSets() {
+//        pass if sets return all sets(actual 500 codes of sets)
         Response response = get(baseUrl + "sets/");
         responseBasicValidation(response);
 
         JsonPath jsonPathEvaluator = response.jsonPath();
         ArrayList list = jsonPathEvaluator.get("sets.code");
-//        list.forEach((n) -> {
-//            System.out.println(n);
-//        });
-
+        codeList.addAll(list);
         assertEquals(list.size(), 500);
-//        System.out.println(list.size());
+
+        String tmpId = (String) list.get(123);
+        testSetId(tmpId);
     }
 
     @Test
-    public void getSetId() {
-
+    public void getSetMockId() {
+//        pass if mocked set-code exist and data  on set booster is correct
         Response response = get(baseUrl + "sets/" + "10E");
         responseBasicValidation(response);
 
@@ -80,21 +96,25 @@ public class ApiTest {
         assertEquals(jsonPathEvaluator.get("set.name"), "Tenth Edition");
 
         ArrayList list = jsonPathEvaluator.get("set.booster");
-        list.forEach((n) -> {
-            System.out.println(n);
-        });
-    }
 
+        assertEquals(list.size(), 14);
+    }
     @Test
     public void getTypes() {
+//        pass if /types returns data
         Response response = get(baseUrl + "types");
         responseBasicValidation(response);
+
+        JsonPath jsonPathEvaluator = response.jsonPath();
+        assertEquals(jsonPathEvaluator.get("types.size()"), new Integer("23"));
     }
 
     @Test
     public void getSubTypes() {
         Response response = get(baseUrl + "subtypes");
         responseBasicValidation(response);
+        JsonPath jsonPathEvaluator = response.jsonPath();
+        assertEquals(jsonPathEvaluator.get("subtypes.size()"), new Integer("445"));
     }
 
     @Test
@@ -112,10 +132,10 @@ public class ApiTest {
                 add("World");
             }
         };
-
         JsonPath jsonPathEvaluator = response.jsonPath();
         assertEquals(jsonPathEvaluator.get("supertypes"), mockSuperTypes);
     }
+
 
     @Test
     public void getFormats() {
@@ -129,20 +149,28 @@ public class ApiTest {
 
     @Test
     public void findByForeignName() {
-        String name = "avacyn";
-        //Defining the base URI
         RestAssured.baseURI = baseUrl;
         RequestSpecification httpRequest = RestAssured.given();
-        //Passing the resource details
+
         Response res = httpRequest.queryParam("name", "avacyn")
                 .queryParam("language", "spanish")
                 .get("/cards");
-        //Retrieving the response body using getBody() method
-        ResponseBody body = res.body();
-        //Converting the response body to string object
-        String rbdy = body.asString();
-        //Creating object of JsonPath and passing the string response body as parameter
-        body.prettyPrint();
+        JsonPath jsonPathEvaluator = res.jsonPath();
+        assertEquals(jsonPathEvaluator.get("cards[0].name"), "Avacyn, Angel of Hope");
+        assertEquals(jsonPathEvaluator.get("cards[0].id"), "2ed7c882-83c3-5867-87bc-5a6c8e69db56");
+        testCardId(jsonPathEvaluator.get("cards[0].id"));
+    }
+
+    @Test
+    public void searchByInvalidForeignName() {
+        RestAssured.baseURI = baseUrl;
+        RequestSpecification httpRequest = RestAssured.given();
+
+        Response res = httpRequest.queryParam("name", "qwertyu")
+//                .queryParam("language", "spanish")
+                .get("/cards");
+        JsonPath jsonPathEvaluator = res.jsonPath();
+        assertEquals(jsonPathEvaluator.get("cards"), new ArrayList<>());
     }
 
     @Test
@@ -150,15 +178,11 @@ public class ApiTest {
         RestAssured.baseURI = baseUrl;
         RestAssured
                 .given()
-
-
                 .pathParam("resourcePath", "types")
                 .when()
                 .get("{resourcePath}")
                 .then()
                 .log()
                 .all();
-
     }
-
 }

@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ApiTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-06-05T11:27:55" hostname="MacBook-Pro-Mac" time="3.053">
+<testsuite name="ApiTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2022-06-06T12:07:07" hostname="MacBook-Pro-Mac" time="24.367">
   <properties/>
-  <testcase name="tmp()" classname="ApiTest" time="3.053"/>
-  <system-out><![CDATA[HTTP/1.1 200 OK
-Date: Sun, 05 Jun 2022 11:27:58 GMT
+  <testcase name="findByForeignName()" classname="ApiTest" time="6.843"/>
+  <testcase name="getCardsMockId()" classname="ApiTest" time="3.821"/>
+  <testcase name="getSets()" classname="ApiTest" time="1.037"/>
+  <testcase name="getSubTypes()" classname="ApiTest" time="1.436"/>
+  <testcase name="tmp()" classname="ApiTest" time="1.546"/>
+  <testcase name="getSupertypesTypes()" classname="ApiTest" time="1.283"/>
+  <testcase name="getFormats()" classname="ApiTest" time="4.338"/>
+  <testcase name="getCards()" classname="ApiTest" time="1.116"/>
+  <testcase name="getSetId()" classname="ApiTest" time="0.405"/>
+  <testcase name="getTypes()" classname="ApiTest" time="2.157"/>
+  <testcase name="searchByInvalidForeignName()" classname="ApiTest" time="0.381"/>
+  <system-out><![CDATA[123
+HTTP/1.1 200 OK
+Date: Mon, 06 Jun 2022 12:07:21 GMT
 Content-Type: application/json; charset=utf-8
 Transfer-Encoding: chunked
 Connection: keep-alive
@@ -15,18 +26,18 @@ X-Permitted-Cross-Domain-Policies: none
 Referrer-Policy: strict-origin-when-cross-origin
 Etag: W/"7b387b80c655d97cfd5cc14d06f37be6"
 Cache-Control: max-age=0, private, must-revalidate
-X-Request-Id: 083c7994-f40e-4421-98b0-93cf92efba57
+X-Request-Id: 0d1bc2f5-4a94-414d-baff-aa61308a4702
 Ratelimit-Limit: 1000
-Ratelimit-Remaining: 995
-X-Runtime: 1.034408
+Ratelimit-Remaining: 998
+X-Runtime: 1.084921
 Vary: Origin
 Via: 1.1 vegur
 CF-Cache-Status: DYNAMIC
 Expect-CT: max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
-Report-To: {"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=i%2FqQkx2O9d9p85KpjXaAKw%2FsdZyz6nEOiw2nmgrI1LewQaVUeFGmP%2Ff4o8mMaMhpMXGRzTE9uzXtaJGiLsLDQabzvctQZWGK%2FRUxZxRDcGEjojrVkGXWro1RyYyPrgAQwZPZry0pVufmJqE%3D"}],"group":"cf-nel","max_age":604800}
+Report-To: {"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=yxnlebvlDoUHdfkLCNBK77yXe%2Fq5QwvFH3D3g3NGGWHwX%2FqvTRYHKIlFtigX7MwAXTOyvFSvTL1rgowXNjgm637ODV25%2F6Fvfmk%2Fru2IocXx5iDoej9sLSjtYyz6BxInoFwos8jt%2FXrvbtU%3D"}],"group":"cf-nel","max_age":604800}
 NEL: {"success_fraction":0,"report_to":"cf-nel","max_age":604800}
 Server: cloudflare
-CF-RAY: 71688fdf7b67417a-HAM
+CF-RAY: 717106efba0d727c-HAM
 Content-Encoding: gzip
 alt-svc: h3=":443"; ma=86400, h3-29=":443"; ma=86400
 
